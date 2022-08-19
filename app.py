@@ -99,22 +99,19 @@ def summarize(url):
     return(paraphrased_text)
 
 
-arr = []
-arr.append("https://www.pib.gov.in/PressReleasePage.aspx?PRID=1851511")
-arr.append("https://www.pib.gov.in/PressReleasePage.aspx?PRID=1850267")
+
 
 app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
-for a in arr :
-    def Index():
-        if req.method == "POST":
-            url = arr[a]
-            date_content = datetime(url)
-            url_content = summarize(url)
-            header_content = header(url)
-            return render_template("main1.html",value1=header_content,value3=date_content,value2=url_content)
+def Index():
+    if req.method == "POST":
+        url = req.form.get("url")
+        date_content = datetime(url)
+        url_content = summarize(url)
+        header_content = header(url)
+        return render_template("main1.html",value1=header_content,value3=date_content,value2=url_content)
         
-        return render_template("index.html")
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
